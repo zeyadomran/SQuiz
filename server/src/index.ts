@@ -6,15 +6,9 @@ import "dotenv-safe/config";
 import express from "express";
 import session from "express-session";
 import "reflect-metadata";
-import { buildSchema, Query, Resolver } from "type-graphql";
+import { buildSchema } from "type-graphql";
 import { COOKIE_NAME, MONGO_OPTIONS, __prod__ } from "./Constants";
-@Resolver()
-class HelloResolver {
-	@Query(() => String)
-	hello() {
-		return "Hello World!";
-	}
-}
+import { QuestionResolver } from "./resolvers/QuestionResolver";
 
 const main = async () => {
 	// Connecting to MongoDB
@@ -38,7 +32,10 @@ const main = async () => {
 			name: COOKIE_NAME,
 			store: MongoStore.create({
 				mongoUrl: process.env.MONGO_URL.replace("website", "session"),
-				mongoOptions: MONGO_OPTIONS,
+				mongoOptions: {
+					useNewUrlParser: true,
+					useUnifiedTopology: true,
+				},
 			}),
 			cookie: {
 				maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days.
@@ -56,7 +53,7 @@ const main = async () => {
 	// Creating instance of Apollo Server
 	const apolloServer = new ApolloServer({
 		schema: await buildSchema({
-			resolvers: [HelloResolver],
+			resolvers: [QuestionResolver],
 			validate: false,
 		}),
 		context: ({ req, res }) => ({
