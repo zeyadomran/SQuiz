@@ -1,16 +1,41 @@
 import { Arg, Ctx, Mutation, Query, Resolver } from "type-graphql";
+import bcrypt from "bcrypt";
 import { COOKIE_NAME } from "../Constants";
 import { UserModel } from "../models/Models";
 import { User } from "../models/User";
 import { MyContext } from "../types/MyContext";
-import { RegisterUserType } from "../types/UserTypes";
+import { LoginUserType, RegisterUserType } from "../types/UserTypes";
 
 @Resolver(() => User)
 export class UserResolver {
-	@Query(() => User, { description: "Get the current logged in user." })
+	@Query(() => User, {
+		nullable: true,
+		description: "Get the current logged in user.",
+	})
 	async me(@Ctx() { req }: MyContext) {
 		if (!req.session.userId) return null;
 		return UserModel.findById(req.session.userId);
+	}
+
+	@Mutation(() => User, { description: "Logs in a user" })
+	async login(@Arg("data") data: LoginUserType, @Ctx() { req }: MyContext) {
+		const { usernameOrEmail, password } = data;
+		let user: User | null;
+
+		if (usernameOrEmail.includes("@")) {
+			user = await UserModel.findOne({ email: usernameOrEmail });
+		} else {
+			user = await UserModel.findOne({ username: usernameOrEmail });
+		}
+
+		if (!user) throw new Error("User not found!");
+
+		const valid = await bcrypt.compare(password, user.password);
+
+		if (!valid) throw new Error("Password is incorrect!");
+
+		req.session.userId = user.id;
+		return user;
 	}
 
 	@Mutation(() => User, { description: "Register a user" })

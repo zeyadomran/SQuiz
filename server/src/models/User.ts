@@ -20,11 +20,11 @@ export class User {
 	id: string;
 
 	@Field(() => String, { description: "The user's email." })
-	@Prop({ required: true, unique: true })
+	@Prop({ required: true, unique: true, index: true })
 	email: string;
 
 	@Field(() => String, { description: "The user's username." })
-	@Prop({ required: true, unique: true })
+	@Prop({ required: true, unique: true, index: true })
 	username: string;
 
 	@Prop({ required: true })
