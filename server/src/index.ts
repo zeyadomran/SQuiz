@@ -19,7 +19,7 @@ class HelloResolver {
 const main = async () => {
 	// Connecting to MongoDB
 	await mongoose
-		.connect(process.env.MONGO_URL!, MONGO_OPTIONS)
+		.connect(process.env.MONGO_URL, MONGO_OPTIONS)
 		.then(() => console.log("🚀 DB successfully connected!"));
 
 	// Creating instance of express server
@@ -37,7 +37,7 @@ const main = async () => {
 		session({
 			name: COOKIE_NAME,
 			store: MongoStore.create({
-				mongoUrl: process.env.MONGO_URL!.replace("website", "session"),
+				mongoUrl: process.env.MONGO_URL.replace("website", "session"),
 				mongoOptions: MONGO_OPTIONS,
 			}),
 			cookie: {
@@ -47,7 +47,7 @@ const main = async () => {
 				secure: __prod__, // cookie only works in https.
 				domain: __prod__ ? ".zeyadomran.com" : undefined,
 			},
-			secret: process.env.SESSION_SECRET!,
+			secret: process.env.SESSION_SECRET,
 			saveUninitialized: false,
 			resave: false,
 		})
@@ -72,7 +72,7 @@ const main = async () => {
 	});
 
 	// Start Server
-	const port = process.env.PORT || 4000;
+	const port = process.env.PORT;
 	app.listen(Number(port), () =>
 		console.log(`🚀 Listening on https://localhost:${port}!`)
 	);
