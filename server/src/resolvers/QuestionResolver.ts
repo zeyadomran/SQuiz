@@ -1,11 +1,13 @@
-import { Arg, Mutation, Query, Resolver } from "type-graphql";
+import { Arg, Mutation, Query, Resolver, UseMiddleware } from "type-graphql";
 import { Question } from "../models/Question";
 import { QuestionModel, AnswerModel } from "../models/Models";
 import { AddQuestionType } from "../types/QuestionTypes";
+import { isAuth } from "../middleware/isAuth";
 
 @Resolver(() => Question)
 export class QuestionResolver {
 	@Query(() => [Question], { description: "Gets 10 random questions." })
+	@UseMiddleware(isAuth)
 	async questions() {
 		const agg = QuestionModel.aggregate([{ $sample: { size: 10 } }]);
 		const data: Question[] = await agg.exec();
