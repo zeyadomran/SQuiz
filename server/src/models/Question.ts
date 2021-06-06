@@ -17,11 +17,14 @@ export class Question {
 	@Prop({ required: true })
 	question: string;
 
-	@Field(() => [Answer], { description: "The answers to the question." })
+	@Field(() => [Answer], {
+		nullable: true,
+		description: "The answers to the question.",
+	})
 	@Prop({
 		ref: () => Answer,
 		foreignField: "questionId",
 		localField: "_id",
 	})
-	answers: Ref<Answer>[];
+	answers?: Ref<Answer>[];
 }

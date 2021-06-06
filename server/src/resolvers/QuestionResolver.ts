@@ -21,7 +21,7 @@ export class QuestionResolver {
 	@Mutation(() => Question, { description: "Adds a question." })
 	async addQuestion(@Arg("data") data: AddQuestionType) {
 		const { question, answers } = data;
-		const newQuestion = await QuestionModel.create({ question, answers: [] });
+		const newQuestion = await QuestionModel.create({ question });
 		const newAnswers = answers.map(
 			async (answer) =>
 				await AnswerModel.create({

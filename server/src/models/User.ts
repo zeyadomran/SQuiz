@@ -1,13 +1,19 @@
-import { ModelOptions, Prop, Ref } from "@typegoose/typegoose";
+import { ModelOptions, Pre, Prop, Ref } from "@typegoose/typegoose";
 import { Field, ID, ObjectType } from "type-graphql";
 import { Score } from "./Score";
-
+import bcrypt from "bcrypt";
 @ObjectType({ description: "The User Model." })
 @ModelOptions({
 	schemaOptions: {
 		toJSON: { virtuals: true },
 		toObject: { virtuals: true },
 	},
+})
+@Pre<User>("save", async function () {
+	/* Only run if password was modified */
+	if (!this.isModified("password")) return;
+	/* Hash the password with cost of 12 */
+	this.password = await bcrypt.hash(this.password, 12);
 })
 export class User {
 	@Field(() => ID, { description: "The user's ID." })
@@ -21,21 +27,42 @@ export class User {
 	@Prop({ required: true, unique: true })
 	username: string;
 
-	@Field(() => String, { description: "The user's password." })
 	@Prop({ required: true })
 	password: string;
 
+	@Field(() => Date, {
+		nullable: true,
+		description: "The date the user was created.",
+	})
+	@Prop({ default: new Date() })
+	createdAt?: Date;
+
 	@Field(() => Boolean, {
+		nullable: true,
 		description: "Whether the user has a private profile or not.",
 	})
 	@Prop({ default: false })
-	private: string;
+	private?: boolean;
 
-	@Field(() => [Score], { description: "The user's scores." })
+	@Field(() => String, {
+		nullable: true,
+		description: "The user's password reset token.",
+	})
+	@Prop()
+	forgotPasswordToken?: string;
+
+	@Field(() => Date, {
+		nullable: true,
+		description: "The user's password reset token expiry date.",
+	})
+	@Prop()
+	forgotPasswordTokenExpire?: Date;
+
+	@Field(() => [Score], { nullable: true, description: "The user's scores." })
 	@Prop({
 		ref: () => Score,
 		foreignField: "userId",
 		localField: "_id",
 	})
-	scores: Ref<Score>[];
+	scores?: Ref<Score>[];
 }

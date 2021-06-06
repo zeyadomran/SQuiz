@@ -17,4 +17,8 @@ export class Score {
 	@Field(() => String, { description: "The score achieved." })
 	@Prop({ required: true })
 	score: string;
+
+	@Field(() => Date, { description: "The date the score was achieved." })
+	@Prop({ default: new Date() })
+	createdAt: Date;
 }
