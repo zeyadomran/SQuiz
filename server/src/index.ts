@@ -2,14 +2,12 @@ import { mongoose } from "@typegoose/typegoose";
 import { ApolloServer } from "apollo-server-express";
 import MongoStore from "connect-mongo";
 import cors from "cors";
+import "dotenv-safe/config";
 import express from "express";
 import session from "express-session";
-import path from "path";
 import "reflect-metadata";
 import { buildSchema, Query, Resolver } from "type-graphql";
 import { COOKIE_NAME, MONGO_OPTIONS, __prod__ } from "./Constants";
-require("dotenv").config({ path: path.join(__dirname, "../.env") });
-
 @Resolver()
 class HelloResolver {
 	@Query(() => String)
@@ -28,7 +26,12 @@ const main = async () => {
 	const app = express();
 
 	app.set("trust proxy", 1);
-	app.use(cors());
+	app.use(
+		cors({
+			origin: process.env.CORS_ORIGIN,
+			credentials: true,
+		})
+	);
 
 	app.use(
 		session({
