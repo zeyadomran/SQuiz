@@ -72,7 +72,6 @@ export const register = async (data: RegisterUserType, { req }: MyContext) => {
 
 export const login = async (data: LoginUserType, { req }: MyContext) => {
 	let user: User | null;
-
 	if (data.usernameOrEmail.includes("@")) {
 		user = await UserModel.findOne({ email: data.usernameOrEmail });
 	} else {
