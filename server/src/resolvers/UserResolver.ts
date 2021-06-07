@@ -1,10 +1,19 @@
-import { Arg, Ctx, Mutation, Query, Resolver } from "type-graphql";
+import {
+	Arg,
+	Ctx,
+	Int,
+	Mutation,
+	Query,
+	Resolver,
+	UseMiddleware,
+} from "type-graphql";
 import bcrypt from "bcrypt";
 import { COOKIE_NAME } from "../Constants";
 import { UserModel } from "../models/Models";
-import { User } from "../models/User";
+import { Score, User } from "../models/User";
 import { MyContext } from "../types/MyContext";
 import { LoginUserType, RegisterUserType } from "../types/UserTypes";
+import { isAuth } from "../middleware/isAuth";
 
 @Resolver(() => User)
 export class UserResolver {
@@ -12,9 +21,44 @@ export class UserResolver {
 		nullable: true,
 		description: "Get the current logged in user.",
 	})
-	async me(@Ctx() { req }: MyContext) {
+	me(@Ctx() { req }: MyContext) {
 		if (!req.session.userId) return null;
 		return UserModel.findById(req.session.userId);
+	}
+
+	@Query(() => [Score], { description: "Get the highest 25 scores." })
+	async leaderBoard() {
+		const scores = await UserModel.aggregate([
+			{ $unwind: "$scores" },
+			{
+				$group: {
+					_id: "$_id",
+					username: { $first: "$scores.username" },
+					score: { $max: "$scores.score" },
+					createdAt: { $first: "$scores.createdAt" },
+				},
+			},
+			{ $sort: { score: -1 } },
+			{ $limit: 25 },
+		]);
+		console.log(scores);
+		return scores;
+	}
+
+	@Mutation(() => User)
+	@UseMiddleware(isAuth)
+	async addScore(
+		@Arg("score", () => Int) score: number,
+		@Ctx() { req }: MyContext
+	) {
+		const user = await UserModel.findById(req.session.userId);
+		if (!user) throw new Error("User not found");
+		user.scores.push({ username: user.username, score, createdAt: new Date() });
+		return UserModel.findByIdAndUpdate(
+			user.id,
+			{ scores: user.scores },
+			{ new: true }
+		);
 	}
 
 	@Mutation(() => User, { description: "Logs in a user" })
@@ -43,7 +87,7 @@ export class UserResolver {
 		@Arg("data") data: RegisterUserType,
 		@Ctx() { req }: MyContext
 	) {
-		const user = await UserModel.create(data);
+		const user = await UserModel.create({ ...data, scores: [] });
 		req.session.userId = user.id;
 		return user;
 	}

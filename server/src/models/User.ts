@@ -1,20 +1,15 @@
-import { ModelOptions, Pre, Prop, Ref } from "@typegoose/typegoose";
-import { Field, ID, ObjectType } from "type-graphql";
-import { Score } from "./Score";
+import { ModelOptions, Pre, Prop } from "@typegoose/typegoose";
 import bcrypt from "bcrypt";
+import { Types } from "mongoose";
+import { Field, ID, Int, ObjectType } from "type-graphql";
 @ObjectType({ description: "The User Model." })
-@ModelOptions({
-	schemaOptions: {
-		toJSON: { virtuals: true },
-		toObject: { virtuals: true },
-	},
-})
 @Pre<User>("save", async function () {
 	/* Only run if password was modified */
 	if (!this.isModified("password")) return;
 	/* Hash the password with cost of 12 */
 	this.password = await bcrypt.hash(this.password, 12);
 })
+@ModelOptions({ options: { allowMixed: 0 } })
 export class User {
 	@Field(() => ID, { description: "The user's ID." })
 	id: string;
@@ -58,11 +53,19 @@ export class User {
 	@Prop()
 	forgotPasswordTokenExpire?: Date;
 
-	@Field(() => [Score], { nullable: true, description: "The user's scores." })
-	@Prop({
-		ref: () => Score,
-		foreignField: "user",
-		localField: "_id",
-	})
-	scores?: Ref<Score>[];
+	@Field(() => [Score], { description: "The user's scores." })
+	@Prop({ required: true })
+	scores: Types.Array<Score>;
+}
+
+@ObjectType({ description: "The Score Model." })
+export class Score {
+	@Field(() => String, { description: "The player's username." })
+	username: string;
+
+	@Field(() => Int, { description: "The player's score." })
+	score: number;
+
+	@Field(() => Date, { description: "The timestamp the score was created." })
+	createdAt: Date;
 }
