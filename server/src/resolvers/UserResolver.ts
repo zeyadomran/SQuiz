@@ -10,7 +10,11 @@ import {
 import { isAuth } from "../middleware/isAuth";
 import { Score, User } from "../models/User";
 import { MyContext } from "../types/MyContext";
-import { LoginUserType, RegisterUserType } from "../types/UserTypes";
+import {
+	LoginUserType,
+	RegisterUserType,
+	UserResponse,
+} from "../types/UserTypes";
 import {
 	addScore,
 	forgotPassword,
@@ -41,18 +45,21 @@ export class UserResolver {
 		return leaderBoard();
 	}
 
-	@Mutation(() => User)
+	@Mutation(() => Score, {
+		nullable: true,
+		description: "Adds the game's score to the user.",
+	})
 	@UseMiddleware(isAuth)
 	addScore(@Arg("score", () => Int) score: number, @Ctx() ctx: MyContext) {
 		return addScore(score, ctx);
 	}
 
-	@Mutation(() => User, { description: "Logs in a user" })
+	@Mutation(() => UserResponse, { description: "Logs in a user" })
 	login(@Arg("data") data: LoginUserType, @Ctx() ctx: MyContext) {
 		return login(data, ctx);
 	}
 
-	@Mutation(() => User, { description: "Register a user" })
+	@Mutation(() => UserResponse, { description: "Register a user" })
 	register(@Arg("data") data: RegisterUserType, @Ctx() ctx: MyContext) {
 		return register(data, ctx);
 	}
@@ -67,7 +74,7 @@ export class UserResolver {
 		return forgotPassword(email);
 	}
 
-	@Mutation(() => User, { description: "Resets a user's password" })
+	@Mutation(() => UserResponse, { description: "Resets a user's password" })
 	resetPassword(
 		@Arg("token") token: string,
 		@Arg("password") password: string
@@ -75,7 +82,10 @@ export class UserResolver {
 		return resetPassword(token, password);
 	}
 
-	@Mutation(() => User, { description: "Toggle a user's public visibility" })
+	@Mutation(() => Boolean, {
+		description: "Toggle a user's public visibility",
+	})
+	@UseMiddleware(isAuth)
 	togglePrivate(@Ctx() ctx: MyContext) {
 		return togglePrivate(ctx);
 	}

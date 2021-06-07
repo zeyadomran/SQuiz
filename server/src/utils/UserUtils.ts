@@ -1,7 +1,7 @@
 import bcrypt from "bcrypt";
 import crypto from "crypto";
 import { COOKIE_NAME } from "../Constants";
-import { User, UserModel } from "../models/User";
+import { Score, User, UserModel } from "../models/User";
 import { MyContext } from "../types/MyContext";
 import { LoginUserType, RegisterUserType } from "../types/UserTypes";
 import { sendEmail } from "./sendEmail";
@@ -12,50 +12,59 @@ export const me = ({ req }: MyContext) => {
 };
 
 export const leaderBoard = () => {
-	return UserModel.aggregate([
-		{ $match: { private: { $ne: true } } },
-		{ $unwind: "$scores" },
-		{
-			$group: {
-				_id: "$_id",
-				username: { $first: "$scores.username" },
-				score: { $max: "$scores.score" },
-				createdAt: { $first: "$scores.createdAt" },
-			},
-		},
-		{ $sort: { score: -1 } },
-		{ $limit: 25 },
-		{
-			$project: {
-				id: "$_id",
-				createdAt: "$createdAt",
-				score: "$score",
-				username: "$username",
-			},
-		},
-	]);
+	return UserModel.aggregate()
+		.match({ private: { $ne: true } })
+		.unwind("$scores")
+		.group({
+			_id: "$_id",
+			username: { $first: "$scores.username" },
+			score: { $max: "$scores.score" },
+			createdAt: { $first: "$scores.createdAt" },
+		})
+		.sort({ score: -1 })
+		.limit(25)
+		.project({
+			id: "$_id",
+			createdAt: "$createdAt",
+			score: "$score",
+			username: "$username",
+		});
 };
 
 export const addScore = async (score: number, { req }: MyContext) => {
 	const user = await UserModel.findById(req.session.userId);
-	if (!user) throw new Error("User not found");
-	user.scores.push({
+
+	if (!user) return null;
+
+	const newScore: Score = {
 		id: user.id,
 		username: user.username,
 		score,
 		createdAt: new Date(),
-	});
-	return UserModel.findByIdAndUpdate(
-		user.id,
-		{ scores: user.scores },
-		{ new: true }
-	);
+	};
+
+	user.scores.push(newScore);
+	await user.save();
+
+	return newScore;
 };
 
 export const register = async (data: RegisterUserType, { req }: MyContext) => {
-	const user = await UserModel.create({ ...data, scores: [] });
-	req.session.userId = user.id;
-	return user;
+	try {
+		const user = await UserModel.create({ ...data, scores: [] });
+		req.session.userId = user.id;
+		return user;
+	} catch (error) {
+		const field = Object.keys(error.keyValue)[0];
+		return {
+			errors: [
+				{
+					field,
+					message: `Duplicate ${field}, try with a different one!`,
+				},
+			],
+		};
+	}
 };
 
 export const login = async (data: LoginUserType, { req }: MyContext) => {
@@ -67,14 +76,32 @@ export const login = async (data: LoginUserType, { req }: MyContext) => {
 		user = await UserModel.findOne({ username: data.usernameOrEmail });
 	}
 
-	if (!user) throw new Error("User not found!");
+	if (!user) {
+		return {
+			errors: [
+				{
+					field: "usernameOrEmail",
+					message: "That username or email doesn't exist!",
+				},
+			],
+		};
+	}
 
 	const valid = await bcrypt.compare(data.password, user.password);
 
-	if (!valid) throw new Error("Password is incorrect!");
+	if (!valid) {
+		return {
+			errors: [
+				{
+					field: "password",
+					message: "Incorrect password!",
+				},
+			],
+		};
+	}
 
 	req.session.userId = user.id;
-	return user;
+	return { user };
 };
 
 export const logout = ({ req, res }: MyContext) => {
@@ -92,30 +119,30 @@ export const logout = ({ req, res }: MyContext) => {
 };
 
 export const forgotPassword = async (email: string) => {
-	const user = await UserModel.findOne({ email });
+	try {
+		const user = await UserModel.findOne({ email });
 
-	if (!user) throw new Error("User not found");
+		if (!user) return false;
 
-	const resetToken = crypto.randomBytes(32).toString("hex");
-	const hashedToken = crypto
-		.createHash("sha256")
-		.update(resetToken)
-		.digest("hex");
-	const expiryDate = new Date(Date.now() + 24 * 60 * 60 * 1000);
+		const resetToken = crypto.randomBytes(32).toString("hex");
 
-	await UserModel.findByIdAndUpdate(
-		user.id,
-		{ forgotPasswordToken: hashedToken, forgotPasswordTokenExpire: expiryDate },
-		{ new: true }
-	);
+		user.forgotPasswordToken = crypto
+			.createHash("sha256")
+			.update(resetToken)
+			.digest("hex");
+		user.forgotPasswordTokenExpire = new Date(Date.now() + 24 * 60 * 60 * 1000);
+		await user.save();
 
-	await sendEmail(
-		user.email,
-		"Reset Password Link (valid for 24 hours)",
-		`Link: http://localhost:3000/forgotpassword/${resetToken}`
-	);
+		await sendEmail(
+			user.email,
+			"Reset Password Link (valid for 24 hours)",
+			`Link: http://localhost:3000/forgotpassword/${resetToken}`
+		);
 
-	return true;
+		return true;
+	} catch (err) {
+		return false;
+	}
 };
 
 // f9bd1669e12d1670eca8dacbe53e000a92043017659cae0969faceacb9a1fd82
@@ -130,7 +157,16 @@ export const resetPassword = async (token: string, password: string) => {
 		forgotPasswordTokenExpire: { $gt: new Date() },
 	});
 
-	if (!user) throw new Error("Invalid/Expired Token");
+	if (!user) {
+		return {
+			errors: [
+				{
+					field: "token",
+					message: "Invalid/Expired Token",
+				},
+			],
+		};
+	}
 
 	user.password = password;
 	user.forgotPasswordToken = undefined;
@@ -142,9 +178,10 @@ export const resetPassword = async (token: string, password: string) => {
 export const togglePrivate = async ({ req }: MyContext) => {
 	const user = await UserModel.findById(req.session.userId);
 
-	if (!user) throw new Error("User not found.");
+	if (!user) return false;
 
 	user.private = !user.private;
+	await user.save();
 
-	return user.save();
+	return true;
 };
