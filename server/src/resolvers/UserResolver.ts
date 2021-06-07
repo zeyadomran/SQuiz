@@ -13,11 +13,13 @@ import { MyContext } from "../types/MyContext";
 import { LoginUserType, RegisterUserType } from "../types/UserTypes";
 import {
 	addScore,
+	forgotPassword,
 	leaderBoard,
 	login,
 	logout,
 	me,
 	register,
+	resetPassword,
 } from "../utils/UserUtils";
 
 @Resolver(() => User)
@@ -57,5 +59,18 @@ export class UserResolver {
 	@Mutation(() => Boolean, { description: "Logs out a user." })
 	logout(@Ctx() ctx: MyContext) {
 		return logout(ctx);
+	}
+
+	@Mutation(() => Boolean, { description: "Generates a password reset token." })
+	forgotPassword(@Arg("email") email: string) {
+		return forgotPassword(email);
+	}
+
+	@Mutation(() => User, { description: "Resets a user's password" })
+	resetPassword(
+		@Arg("token") token: string,
+		@Arg("password") password: string
+	) {
+		return resetPassword(token, password);
 	}
 }

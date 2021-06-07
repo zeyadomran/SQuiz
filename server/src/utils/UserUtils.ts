@@ -1,8 +1,10 @@
 import bcrypt from "bcrypt";
+import crypto from "crypto";
 import { COOKIE_NAME } from "../Constants";
 import { User, UserModel } from "../models/User";
 import { MyContext } from "../types/MyContext";
 import { LoginUserType, RegisterUserType } from "../types/UserTypes";
+import { sendEmail } from "./sendEmail";
 
 export const me = ({ req }: MyContext) => {
 	if (!req.session.userId) return null;
@@ -86,4 +88,52 @@ export const logout = ({ req, res }: MyContext) => {
 			resolve(true);
 		})
 	);
+};
+
+export const forgotPassword = async (email: string) => {
+	const user = await UserModel.findOne({ email });
+
+	if (!user) throw new Error("User not found");
+
+	const resetToken = crypto.randomBytes(32).toString("hex");
+	const hashedToken = crypto
+		.createHash("sha256")
+		.update(resetToken)
+		.digest("hex");
+	const expiryDate = new Date(Date.now() + 24 * 60 * 60 * 1000);
+
+	await UserModel.findByIdAndUpdate(
+		user.id,
+		{ forgotPasswordToken: hashedToken, forgotPasswordTokenExpire: expiryDate },
+		{ new: true }
+	);
+
+	await sendEmail(
+		user.email,
+		"Reset Password Link (valid for 24 hours)",
+		`Link: http://localhost:3000/forgotpassword/${resetToken}`
+	);
+
+	return true;
+};
+
+// f9bd1669e12d1670eca8dacbe53e000a92043017659cae0969faceacb9a1fd82
+export const resetPassword = async (token: string, password: string) => {
+	const forgotPasswordToken = crypto
+		.createHash("sha256")
+		.update(token)
+		.digest("hex");
+
+	const user = await UserModel.findOne({
+		forgotPasswordToken,
+		forgotPasswordTokenExpire: { $gt: new Date() },
+	});
+
+	if (!user) throw new Error("Invalid/Expired Token");
+
+	user.password = password;
+	user.forgotPasswordToken = undefined;
+	user.forgotPasswordTokenExpire = undefined;
+
+	return user.save();
 };
