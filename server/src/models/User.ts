@@ -1,4 +1,9 @@
-import { ModelOptions, Pre, Prop } from "@typegoose/typegoose";
+import {
+	getModelForClass,
+	ModelOptions,
+	Pre,
+	Prop,
+} from "@typegoose/typegoose";
 import bcrypt from "bcrypt";
 import { Types } from "mongoose";
 import { Field, ID, Int, ObjectType } from "type-graphql";
@@ -58,8 +63,13 @@ export class User {
 	scores: Types.Array<Score>;
 }
 
+export const UserModel = getModelForClass(User);
+
 @ObjectType({ description: "The Score Model." })
 export class Score {
+	@Field(() => ID, { description: "The player's ID." })
+	id: string;
+
 	@Field(() => String, { description: "The player's username." })
 	username: string;
 

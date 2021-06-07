@@ -3,7 +3,7 @@ import { Field, InputType } from "type-graphql";
 @InputType()
 export class AddQuestionType {
 	@Field()
-	question: string;
+	title: string;
 	@Field(() => [AddAnswerType])
 	answers: AddAnswerType[];
 }
@@ -11,7 +11,7 @@ export class AddQuestionType {
 @InputType()
 export class AddAnswerType {
 	@Field()
-	answer: string;
+	title: string;
 	@Field()
 	isCorrect: boolean;
 }

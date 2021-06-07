@@ -1,30 +1,29 @@
-import { ModelOptions, Prop, Ref } from "@typegoose/typegoose";
+import { getModelForClass, ModelOptions, Prop } from "@typegoose/typegoose";
+import { Types } from "mongoose";
 import { Field, ID, ObjectType } from "type-graphql";
-import { Answer } from "./Answer";
 
 @ObjectType({ description: "The Question Model." })
-@ModelOptions({
-	schemaOptions: {
-		toJSON: { virtuals: true },
-		toObject: { virtuals: true },
-	},
-})
+@ModelOptions({ options: { allowMixed: 0 } })
 export class Question {
 	@Field(() => ID, { description: "The question's ID." })
 	id: string;
 
-	@Field(() => String, { description: "The question." })
+	@Field(() => String, { description: "The title of the question." })
 	@Prop({ required: true })
-	question: string;
+	title: string;
 
-	@Field(() => [Answer], {
-		nullable: true,
-		description: "The answers to the question.",
-	})
-	@Prop({
-		ref: () => Answer,
-		foreignField: "questionId",
-		localField: "_id",
-	})
-	answers?: Ref<Answer>[];
+	@Field(() => [Answer], { description: "The answers to the question." })
+	@Prop({ required: true })
+	answers: Types.Array<Answer>;
+}
+
+export const QuestionModel = getModelForClass(Question);
+
+@ObjectType({ description: "The Answer Model." })
+export class Answer {
+	@Field(() => String, { description: "The title of the answer." })
+	title: string;
+
+	@Field(() => Boolean, { description: "True if the answer is correct." })
+	isCorrect: boolean;
 }
