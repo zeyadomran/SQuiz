@@ -61,7 +61,7 @@ export class User {
 	@Field(() => [Score], { nullable: true, description: "The user's scores." })
 	@Prop({
 		ref: () => Score,
-		foreignField: "userId",
+		foreignField: "user",
 		localField: "_id",
 	})
 	scores?: Ref<Score>[];

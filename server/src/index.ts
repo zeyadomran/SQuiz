@@ -9,6 +9,7 @@ import "reflect-metadata";
 import { buildSchema } from "type-graphql";
 import { COOKIE_NAME, MONGO_OPTIONS, __prod__ } from "./Constants";
 import { QuestionResolver } from "./resolvers/QuestionResolver";
+import { ScoreResolver } from "./resolvers/ScoreResolver";
 import { UserResolver } from "./resolvers/UserResolver";
 
 const main = async () => {
@@ -54,7 +55,7 @@ const main = async () => {
 	// Creating instance of Apollo Server
 	const apolloServer = new ApolloServer({
 		schema: await buildSchema({
-			resolvers: [QuestionResolver, UserResolver],
+			resolvers: [QuestionResolver, UserResolver, ScoreResolver],
 			validate: false,
 		}),
 		context: ({ req, res }) => ({

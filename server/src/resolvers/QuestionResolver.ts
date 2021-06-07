@@ -9,8 +9,7 @@ export class QuestionResolver {
 	@Query(() => [Question], { description: "Gets 10 random questions." })
 	@UseMiddleware(isAuth)
 	async questions() {
-		const agg = QuestionModel.aggregate([{ $sample: { size: 10 } }]);
-		const data: Question[] = await agg.exec();
+		const data = await QuestionModel.aggregate([{ $sample: { size: 10 } }]);
 		const questions = (
 			await QuestionModel.populate(data, { path: "answers" })
 		).map((q) => {
