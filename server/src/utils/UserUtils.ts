@@ -4,6 +4,7 @@ import { COOKIE_NAME } from "../Constants";
 import { Score, User, UserModel } from "../models/User";
 import { MyContext } from "../types/MyContext";
 import { LoginUserType, RegisterUserType } from "../types/UserTypes";
+import { registerValidation, validatePassword } from "./InputValidation";
 import { sendEmail } from "./sendEmail";
 
 export const me = ({ req }: MyContext) => {
@@ -50,6 +51,8 @@ export const addScore = async (score: number, { req }: MyContext) => {
 };
 
 export const register = async (data: RegisterUserType, { req }: MyContext) => {
+	const errors = registerValidation(data);
+	if (errors) return { errors };
 	try {
 		const user = await UserModel.create({ ...data, scores: [] });
 		req.session.userId = user.id;
@@ -167,6 +170,9 @@ export const resetPassword = async (token: string, password: string) => {
 			],
 		};
 	}
+
+	const errors = validatePassword(password);
+	if (errors) return { errors };
 
 	user.password = password;
 	user.forgotPasswordToken = undefined;
