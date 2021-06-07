@@ -7,8 +7,6 @@ import express from "express";
 import session from "express-session";
 import "reflect-metadata";
 import { buildSchema } from "type-graphql";
-import helmet from "helmet";
-import mongoSanitize from "express-mongo-sanitize";
 import { COOKIE_NAME, MONGO_OPTIONS, __prod__ } from "./Constants";
 import { QuestionResolver } from "./resolvers/QuestionResolver";
 import { UserResolver } from "./resolvers/UserResolver";
@@ -21,10 +19,6 @@ const main = async () => {
 
 	// Creating instance of express server
 	const app = express();
-
-	// Security Middleware
-	if (__prod__) app.use(helmet());
-	app.use(mongoSanitize());
 
 	app.set("trust proxy", 1);
 	app.use(

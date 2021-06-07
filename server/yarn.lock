@@ -1172,11 +1172,6 @@ eventemitter3@^3.1.0:
   resolved "https://registry.yarnpkg.com/eventemitter3/-/eventemitter3-3.1.2.tgz#2d3d48f9c346698fce83a85d7d664e98535df6e7"
   integrity sha512-tvtQIeLVHjDkJYnzf2dgVMxfuSGJeM/7UCG17TT4EumTfNtF+0nebF/4zWOIkCreAbtNqhGEboB6BWrwqNaw4Q==
 
-express-mongo-sanitize@^2.1.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/express-mongo-sanitize/-/express-mongo-sanitize-2.1.0.tgz#a8c647787c25ded6e97b5e864d113e7687c5d471"
-  integrity sha512-ELGeH/Tx+kJGn3klCzSmOewfN1ezJQrkqzq83dl/K3xhd5PUbvLtiD5CiuYRmQfoZPL4rUEVjANf/YjE2BpTWQ==
-
 express-session@^1.17.2:
   version "1.17.2"
   resolved "https://registry.yarnpkg.com/express-session/-/express-session-1.17.2.tgz#397020374f9bf7997f891b85ea338767b30d0efd"
@@ -1472,11 +1467,6 @@ has@^1.0.3:
   integrity sha512-f2dvO0VU6Oej7RkWJGrehjbzMAjFp5/VKPp5tTpWIV4JHHZK1/BxbFRtf/siA2SWTe09caDmVtYYzWEIbBS4zw==
   dependencies:
     function-bind "^1.1.1"
-
-helmet@^4.6.0:
-  version "4.6.0"
-  resolved "https://registry.yarnpkg.com/helmet/-/helmet-4.6.0.tgz#579971196ba93c5978eb019e4e8ec0e50076b4df"
-  integrity sha512-HVqALKZlR95ROkrnesdhbbZJFi/rIVSoNq6f3jA/9u6MIbTsPh3xZwihjeI5+DO/2sOV6HMHooXcEOuwskHpTg==
 
 http-cache-semantics@^4.0.0:
   version "4.1.0"
