@@ -20,6 +20,7 @@ import {
 	me,
 	register,
 	resetPassword,
+	togglePrivate,
 } from "../utils/UserUtils";
 
 @Resolver(() => User)
@@ -72,5 +73,10 @@ export class UserResolver {
 		@Arg("password") password: string
 	) {
 		return resetPassword(token, password);
+	}
+
+	@Mutation(() => User, { description: "Toggle a user's public visibility" })
+	togglePrivate(@Ctx() ctx: MyContext) {
+		return togglePrivate(ctx);
 	}
 }

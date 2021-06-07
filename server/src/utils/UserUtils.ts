@@ -13,6 +13,7 @@ export const me = ({ req }: MyContext) => {
 
 export const leaderBoard = () => {
 	return UserModel.aggregate([
+		{ $match: { private: { $ne: true } } },
 		{ $unwind: "$scores" },
 		{
 			$group: {
@@ -134,6 +135,16 @@ export const resetPassword = async (token: string, password: string) => {
 	user.password = password;
 	user.forgotPasswordToken = undefined;
 	user.forgotPasswordTokenExpire = undefined;
+
+	return user.save();
+};
+
+export const togglePrivate = async ({ req }: MyContext) => {
+	const user = await UserModel.findById(req.session.userId);
+
+	if (!user) throw new Error("User not found.");
+
+	user.private = !user.private;
 
 	return user.save();
 };
