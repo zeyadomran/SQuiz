@@ -18,7 +18,14 @@ const PrivateScores: React.FC = () => {
 		skip: isServer(),
 	});
 	return (
-		<Box w={{ base: "xs", md: "md" }} p={8} rounded={"lg"} bg={"purple.700"}>
+		<Box
+			w={{ base: "sm", md: "md" }}
+			p={8}
+			rounded={"lg"}
+			h={{ base: "2xs", md: "md" }}
+			overflowY="scroll"
+			bg={"purple.700"}
+		>
 			<Heading as="h1" size="2xl" mb="10px" color="#0FD9D8">
 				Your Scores
 			</Heading>

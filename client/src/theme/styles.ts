@@ -13,7 +13,9 @@ export const styles: Styles = {
 			minHeight: "100%",
 			lineHeight: "base",
 		},
-		body: {},
+		body: {
+			bg: "purple.600",
+		},
 		html: {
 			scrollBehavior: "smooth",
 		},

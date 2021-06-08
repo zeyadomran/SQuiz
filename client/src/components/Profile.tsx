@@ -3,7 +3,6 @@ import {
 	Button,
 	Popover,
 	PopoverTrigger,
-	Portal,
 	PopoverContent,
 	PopoverBody,
 	Stack,
@@ -47,42 +46,40 @@ const Profile: React.FC<ProfileProps> = ({ username, isPrivate }) => {
 					{username}
 				</Button>
 			</PopoverTrigger>
-			<Portal>
-				<PopoverContent bg={"purple.700"} _focus={{ border: "none" }}>
-					<PopoverBody>
-						<Stack spacing={5} p={4}>
-							<Button
-								onClick={async () => {
-									await logout();
-									await apolloClient.resetStore();
-								}}
-								isLoading={logoutFetching}
-								bg="purple.600"
-								_active={{ border: "none" }}
-								_focus={{ border: "none" }}
-								_hover={{ bg: "purple.800" }}
-								color="white"
-							>
-								Logout
-							</Button>
-							<Button
-								onClick={async () => {
-									await togglePrivate();
-									await apolloClient.resetStore();
-								}}
-								isLoading={privateFetching}
-								bg="purple.600"
-								_active={{ border: "none" }}
-								_focus={{ border: "none" }}
-								_hover={{ bg: "purple.800" }}
-								color="white"
-							>
-								{privateMsg}
-							</Button>
-						</Stack>
-					</PopoverBody>
-				</PopoverContent>
-			</Portal>
+			<PopoverContent bg={"purple.700"} _focus={{ border: "none" }}>
+				<PopoverBody>
+					<Stack spacing={5} p={4}>
+						<Button
+							onClick={async () => {
+								await logout();
+								await apolloClient.resetStore();
+							}}
+							isLoading={logoutFetching}
+							bg="purple.600"
+							_active={{ border: "none" }}
+							_focus={{ border: "none" }}
+							_hover={{ bg: "purple.800" }}
+							color="white"
+						>
+							Logout
+						</Button>
+						<Button
+							onClick={async () => {
+								await togglePrivate();
+								await apolloClient.resetStore();
+							}}
+							isLoading={privateFetching}
+							bg="purple.600"
+							_active={{ border: "none" }}
+							_focus={{ border: "none" }}
+							_hover={{ bg: "purple.800" }}
+							color="white"
+						>
+							{privateMsg}
+						</Button>
+					</Stack>
+				</PopoverBody>
+			</PopoverContent>
 		</Popover>
 	);
 };
