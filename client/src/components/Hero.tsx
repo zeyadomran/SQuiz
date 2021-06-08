@@ -52,7 +52,7 @@ export default function CallToActionWithAnnotation() {
 						<Box>
 							<Icon
 								as={Arrow}
-								color={useColorModeValue("gray.800", "gray.300")}
+								color={"white"}
 								w={71}
 								position={"absolute"}
 								right={-71}
