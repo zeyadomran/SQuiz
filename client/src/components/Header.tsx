@@ -6,7 +6,7 @@ import NavLink from "./NavLink";
 
 export const Header = () => {
 	return (
-		<Box as="header" h={"70px"} p={2} bg="purple.600">
+		<Box as="header" h={"70px"} p={4} bg="purple.600">
 			<Flex w={["95%", "90%", "85%", "80%"]} mx="auto" justify="space-between">
 				<Flex as="nav" justify="flex-start" align="center">
 					<Logo />
