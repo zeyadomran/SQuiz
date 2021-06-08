@@ -1,4 +1,5 @@
 import { Flex } from "@chakra-ui/react";
+import Head from "next/head";
 import React from "react";
 import { Footer } from "../components/Footer";
 import { Header } from "../components/Header";
@@ -9,11 +10,16 @@ import withApollo from "../utils/withApollo";
 const Index: React.FC = () => {
 	useAuth();
 	return (
-		<Flex h={"100vh"} direction="column" justify="space-between">
-			<Header />
-			<Hero />
-			<Footer />
-		</Flex>
+		<>
+			<Head>
+				<title>SQuiz</title>
+			</Head>
+			<Flex h={"100vh"} direction="column" justify="space-between">
+				<Header />
+				<Hero />
+				<Footer />
+			</Flex>
+		</>
 	);
 };
 
