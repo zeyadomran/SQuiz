@@ -23,7 +23,12 @@ const CTA: React.FC<CTAProps> = ({ children, to, ...rest }) => {
 				outline="none"
 				borderRadius={"5px"}
 				_focus={{ border: "none" }}
-				_hover={{ bg: "#0FD9D8" }}
+				_hover={{
+					_after: {
+						borderColor: "#FEFEFE",
+					},
+					bg: "#FEFEFE",
+				}}
 				_after={{
 					content: '""',
 					position: "absolute",

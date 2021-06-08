@@ -3,6 +3,8 @@ import type { AppProps } from "next/app";
 import { Router } from "next/router";
 import NProgress from "nprogress";
 import "nprogress/nprogress.css";
+import React from "react";
+import SEO from "../components/meta/SEO";
 import theme from "../theme/theme";
 
 function MyApp({ Component, pageProps }: AppProps) {
@@ -10,9 +12,12 @@ function MyApp({ Component, pageProps }: AppProps) {
 	Router.events.on("routeChangeComplete", () => NProgress.done());
 	Router.events.on("routeChangeError", () => NProgress.done());
 	return (
-		<ChakraProvider resetCSS theme={theme}>
-			<Component {...pageProps} />
-		</ChakraProvider>
+		<>
+			<SEO />
+			<ChakraProvider resetCSS theme={theme}>
+				<Component {...pageProps} />
+			</ChakraProvider>
+		</>
 	);
 }
 export default MyApp;
