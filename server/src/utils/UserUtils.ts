@@ -56,7 +56,7 @@ export const register = async (data: RegisterUserType, { req }: MyContext) => {
 	try {
 		const user = await UserModel.create({ ...data, scores: [] });
 		req.session.userId = user.id;
-		return user;
+		return { user };
 	} catch (error) {
 		const field = Object.keys(error.keyValue)[0];
 		return {
@@ -148,7 +148,6 @@ export const forgotPassword = async (email: string) => {
 	}
 };
 
-// f9bd1669e12d1670eca8dacbe53e000a92043017659cae0969faceacb9a1fd82
 export const resetPassword = async (token: string, password: string) => {
 	const forgotPasswordToken = crypto
 		.createHash("sha256")
@@ -177,8 +176,8 @@ export const resetPassword = async (token: string, password: string) => {
 	user.password = password;
 	user.forgotPasswordToken = undefined;
 	user.forgotPasswordTokenExpire = undefined;
-
-	return user.save();
+	await user.save();
+	return { user };
 };
 
 export const togglePrivate = async ({ req }: MyContext) => {

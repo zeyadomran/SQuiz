@@ -4,7 +4,6 @@ import {
 	Heading,
 	Container,
 	Text,
-	Button,
 	Stack,
 	Icon,
 	useColorModeValue,
