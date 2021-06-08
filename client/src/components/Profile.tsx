@@ -46,7 +46,12 @@ const Profile: React.FC<ProfileProps> = ({ username, isPrivate }) => {
 					{username}
 				</Button>
 			</PopoverTrigger>
-			<PopoverContent bg={"purple.700"} _focus={{ border: "none" }}>
+			<PopoverContent
+				shadow="md"
+				zIndex="999"
+				bg={"purple.800"}
+				_focus={{ border: "none" }}
+			>
 				<PopoverBody>
 					<Stack spacing={5} p={4}>
 						<Button
@@ -58,7 +63,7 @@ const Profile: React.FC<ProfileProps> = ({ username, isPrivate }) => {
 							bg="purple.600"
 							_active={{ border: "none" }}
 							_focus={{ border: "none" }}
-							_hover={{ bg: "purple.800" }}
+							_hover={{ bg: "purple.900" }}
 							color="white"
 						>
 							Logout
@@ -72,7 +77,7 @@ const Profile: React.FC<ProfileProps> = ({ username, isPrivate }) => {
 							bg="purple.600"
 							_active={{ border: "none" }}
 							_focus={{ border: "none" }}
-							_hover={{ bg: "purple.800" }}
+							_hover={{ bg: "purple.900" }}
 							color="white"
 						>
 							{privateMsg}

@@ -32,6 +32,9 @@ const Leaderboard: React.FC = () => {
 				<Thead>
 					<Tr>
 						<Th fontFamily="Open Sans" fontSize="14px" color="#0FD9D8">
+							rank
+						</Th>
+						<Th fontFamily="Open Sans" fontSize="14px" color="#0FD9D8">
 							username
 						</Th>
 						<Th fontFamily="Open Sans" fontSize="14px" color="#0FD9D8">
@@ -40,8 +43,9 @@ const Leaderboard: React.FC = () => {
 					</Tr>
 				</Thead>
 				<Tbody>
-					{data?.leaderBoard?.map((score) => (
+					{data?.leaderBoard?.map((score, i) => (
 						<Tr key={score.id}>
+							<Td>#{i + 1}</Td>
 							<Td>{score.username}</Td>
 							<Td>{score.score}</Td>
 						</Tr>
