@@ -26,8 +26,8 @@ const Profile: React.FC<ProfileProps> = ({ username, isPrivate }) => {
 	const apolloClient = useApolloClient();
 	let privateMsg = null;
 
-	if (!isPrivate) privateMsg = "Switch to Public";
-	else privateMsg = "Switch to Private";
+	if (!isPrivate) privateMsg = "Switch to Private";
+	else privateMsg = "Switch to Public";
 
 	return (
 		<Popover>

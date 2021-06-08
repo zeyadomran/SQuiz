@@ -10,12 +10,12 @@ import {
 import { Field, Form, Formik } from "formik";
 import { useRouter } from "next/router";
 import React from "react";
-import { MeDocument, MeQuery, useLoginMutation } from "../generated/graphql";
+import { MeDocument, MeQuery, useRegisterMutation } from "../generated/graphql";
 import { toErrorMap } from "../utils/toErrorMap";
 
-const LoginForm: React.FC = () => {
+const SignupForm: React.FC = () => {
 	const router = useRouter();
-	const [login] = useLoginMutation();
+	const [signup] = useRegisterMutation();
 
 	return (
 		<Box
@@ -27,12 +27,12 @@ const LoginForm: React.FC = () => {
 			textAlign="center"
 		>
 			<Heading as="h1" size="3xl" mb="10px" color="#0FD9D8">
-				Login
+				Signup
 			</Heading>
 			<Formik
-				initialValues={{ usernameOrEmail: "", password: "" }}
+				initialValues={{ email: "", username: "", password: "" }}
 				onSubmit={async (values, { setErrors }) => {
-					const response = await login({
+					const response = await signup({
 						variables: {
 							data: values,
 						},
@@ -41,14 +41,14 @@ const LoginForm: React.FC = () => {
 								query: MeDocument,
 								data: {
 									__typename: "Query",
-									me: data?.login.user,
+									me: data?.register.user,
 								},
 							});
 						},
 					});
-					if (response.data?.login.errors) {
-						setErrors(toErrorMap(response.data.login.errors));
-					} else if (response.data?.login.user) {
+					if (response.data?.register.errors) {
+						setErrors(toErrorMap(response.data.register.errors));
+					} else if (response.data?.register.user) {
 						if (typeof router.query.next === "string") {
 							router.push(router.query.next);
 						} else {
@@ -59,19 +59,29 @@ const LoginForm: React.FC = () => {
 			>
 				{(props) => (
 					<Form>
-						<Field name="usernameOrEmail">
+						<Field name="email">
 							{({ field, form }: any) => (
-								<FormControl mb={5} isInvalid={!!form.errors.usernameOrEmail}>
-									<FormLabel htmlFor="usernameOrEmail">
-										Your username or email
-									</FormLabel>
+								<FormControl mb={5} isInvalid={!!form.errors.email}>
+									<FormLabel htmlFor="email">Your email</FormLabel>
 									<Input
 										{...field}
-										id="usernameOrEmail"
-										placeholder="username or email"
+										type="email"
+										id="email"
+										placeholder="Email"
 									/>
 									<FormErrorMessage fontWeight="bold">
-										{form.errors.usernameOrEmail}
+										{form.errors.email}
+									</FormErrorMessage>
+								</FormControl>
+							)}
+						</Field>
+						<Field name="username">
+							{({ field, form }: any) => (
+								<FormControl mb={5} isInvalid={!!form.errors.username}>
+									<FormLabel htmlFor="username">Your username</FormLabel>
+									<Input {...field} id="username" placeholder="Username" />
+									<FormErrorMessage fontWeight="bold">
+										{form.errors.username}
 									</FormErrorMessage>
 								</FormControl>
 							)}
@@ -114,4 +124,4 @@ const LoginForm: React.FC = () => {
 	);
 };
 
-export default LoginForm;
+export default SignupForm;
