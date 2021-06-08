@@ -2,7 +2,6 @@ import {
 	Box,
 	Heading,
 	Table,
-	TableCaption,
 	Tbody,
 	Td,
 	Th,
