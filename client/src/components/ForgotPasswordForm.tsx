@@ -11,11 +11,10 @@ import {
 	Input,
 } from "@chakra-ui/react";
 import { Field, Form, Formik } from "formik";
-import { useRouter } from "next/router";
 import React from "react";
 import { useForgotPasswordMutation } from "../generated/graphql";
 
-const LoginForm: React.FC = () => {
+const ForgotPasswordForm: React.FC = () => {
 	const [forgotPassword] = useForgotPasswordMutation();
 	const [success, setSuccess] = React.useState(false);
 
@@ -89,4 +88,4 @@ const LoginForm: React.FC = () => {
 	);
 };
 
-export default LoginForm;
+export default ForgotPasswordForm;

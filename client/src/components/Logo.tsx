@@ -7,6 +7,7 @@ const Logo: React.FC = () => {
 	return (
 		<Link href="/">
 			<Icon
+				cursor="pointer"
 				w={["80px", "85px", "90px", "95px"]}
 				h={["35px", "40px", "45px", "50px"]}
 				as={Squiz}
