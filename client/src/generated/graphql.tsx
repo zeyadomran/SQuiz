@@ -275,6 +275,17 @@ export type TogglePrivateMutation = (
   )> }
 );
 
+export type LeaderboardQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type LeaderboardQuery = (
+  { __typename?: 'Query' }
+  & { leaderBoard?: Maybe<Array<(
+    { __typename?: 'Score' }
+    & Pick<Score, 'id' | 'username' | 'score' | 'createdAt'>
+  )>> }
+);
+
 export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -524,6 +535,43 @@ export function useTogglePrivateMutation(baseOptions?: Apollo.MutationHookOption
 export type TogglePrivateMutationHookResult = ReturnType<typeof useTogglePrivateMutation>;
 export type TogglePrivateMutationResult = Apollo.MutationResult<TogglePrivateMutation>;
 export type TogglePrivateMutationOptions = Apollo.BaseMutationOptions<TogglePrivateMutation, TogglePrivateMutationVariables>;
+export const LeaderboardDocument = gql`
+    query Leaderboard {
+  leaderBoard {
+    id
+    username
+    score
+    createdAt
+  }
+}
+    `;
+
+/**
+ * __useLeaderboardQuery__
+ *
+ * To run a query within a React component, call `useLeaderboardQuery` and pass it any options that fit your needs.
+ * When your component renders, `useLeaderboardQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useLeaderboardQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useLeaderboardQuery(baseOptions?: Apollo.QueryHookOptions<LeaderboardQuery, LeaderboardQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<LeaderboardQuery, LeaderboardQueryVariables>(LeaderboardDocument, options);
+      }
+export function useLeaderboardLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<LeaderboardQuery, LeaderboardQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<LeaderboardQuery, LeaderboardQueryVariables>(LeaderboardDocument, options);
+        }
+export type LeaderboardQueryHookResult = ReturnType<typeof useLeaderboardQuery>;
+export type LeaderboardLazyQueryHookResult = ReturnType<typeof useLeaderboardLazyQuery>;
+export type LeaderboardQueryResult = Apollo.QueryResult<LeaderboardQuery, LeaderboardQueryVariables>;
 export const MeDocument = gql`
     query Me {
   me {

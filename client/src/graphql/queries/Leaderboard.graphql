@@ -1,0 +1,8 @@
+query Leaderboard {
+	leaderBoard {
+		id
+		username
+		score
+		createdAt
+	}
+}

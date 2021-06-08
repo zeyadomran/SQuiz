@@ -6,7 +6,6 @@ import {
 	Text,
 	Stack,
 	Icon,
-	useColorModeValue,
 	createIcon,
 } from "@chakra-ui/react";
 import CTA from "./CTA";

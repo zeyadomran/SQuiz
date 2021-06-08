@@ -22,7 +22,11 @@ interface ProfileProps {
 const Profile: React.FC<ProfileProps> = ({ username, isPrivate }) => {
 	const [logout, { loading: logoutFetching }] = useLogoutMutation();
 	const [togglePrivate, { loading: privateFetching }] =
-		useTogglePrivateMutation();
+		useTogglePrivateMutation({
+			update: (cache) => {
+				cache.evict({ fieldName: "leaderboard:[]" });
+			},
+		});
 	const apolloClient = useApolloClient();
 	let privateMsg = null;
 
