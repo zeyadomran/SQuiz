@@ -5,7 +5,6 @@ import {
 	PopoverTrigger,
 	Portal,
 	PopoverContent,
-	PopoverCloseButton,
 	PopoverBody,
 	Stack,
 } from "@chakra-ui/react";
@@ -26,8 +25,10 @@ const Profile: React.FC<ProfileProps> = ({ username, isPrivate }) => {
 		useTogglePrivateMutation();
 	const apolloClient = useApolloClient();
 	let privateMsg = null;
+
 	if (!isPrivate) privateMsg = "Switch to Public";
 	else privateMsg = "Switch to Private";
+
 	return (
 		<Popover>
 			<PopoverTrigger>
@@ -53,7 +54,6 @@ const Profile: React.FC<ProfileProps> = ({ username, isPrivate }) => {
 								}}
 								isLoading={logoutFetching}
 								bg="purple.600"
-								textTransform="uppercase"
 								_active={{ border: "none" }}
 								_focus={{ border: "none" }}
 								_hover={{ bg: "purple.800" }}
@@ -68,7 +68,6 @@ const Profile: React.FC<ProfileProps> = ({ username, isPrivate }) => {
 								}}
 								isLoading={privateFetching}
 								bg="purple.600"
-								textTransform="uppercase"
 								_active={{ border: "none" }}
 								_focus={{ border: "none" }}
 								_hover={{ bg: "purple.800" }}
