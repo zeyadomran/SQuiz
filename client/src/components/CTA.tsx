@@ -12,7 +12,7 @@ const CTA: React.FC<CTAProps> = ({ children, to, ...rest }) => {
 			<Button
 				position="relative"
 				display="block"
-				width="100%"
+				size="md"
 				textAlign="center"
 				background="#0FD9D8"
 				color="purple.900"

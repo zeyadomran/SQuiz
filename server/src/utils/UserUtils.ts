@@ -183,10 +183,9 @@ export const resetPassword = async (token: string, password: string) => {
 export const togglePrivate = async ({ req }: MyContext) => {
 	const user = await UserModel.findById(req.session.userId);
 
-	if (!user) return false;
+	if (!user) return null;
 
 	user.private = !user.private;
-	await user.save();
 
-	return true;
+	return user.save();
 };

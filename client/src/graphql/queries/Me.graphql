@@ -3,6 +3,7 @@ query Me {
 		id
 		username
 		email
+		private
 		scores {
 			score
 			createdAt

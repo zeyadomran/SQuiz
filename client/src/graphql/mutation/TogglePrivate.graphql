@@ -1,0 +1,6 @@
+mutation TogglePrivate {
+	togglePrivate {
+		id
+		private
+	}
+}

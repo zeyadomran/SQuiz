@@ -82,7 +82,8 @@ export class UserResolver {
 		return resetPassword(token, password);
 	}
 
-	@Mutation(() => Boolean, {
+	@Mutation(() => User, {
+		nullable: true,
 		description: "Toggle a user's public visibility",
 	})
 	@UseMiddleware(isAuth)
