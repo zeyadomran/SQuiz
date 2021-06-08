@@ -23,5 +23,10 @@ export const Favicon: React.FC = () => (
 		<link rel="mask-icon" href="images/safari-pinned-tab.svg" color="#41108e" />
 		<meta name="msapplication-TileColor" content="#41108e" />
 		<meta name="theme-color" content="#41108e" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Bangers&family=Open+Sans&display=swap"
+			rel="stylesheet"
+		/>
 	</Head>
 );

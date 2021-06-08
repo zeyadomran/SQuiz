@@ -1,4 +1,4 @@
-import { mode, Styles } from "@chakra-ui/theme-tools";
+import { Styles } from "@chakra-ui/theme-tools";
 
 export const styles: Styles = {
 	global: (props: any) => ({
@@ -8,20 +8,20 @@ export const styles: Styles = {
 		"#__next": {
 			display: "flex",
 			flexDirection: "column",
+			bg: "purple.600",
+			color: "white",
 			minHeight: "100%",
-			color: mode("black.800", "white.100")(props),
-			bg: mode("white.200", "black.700")(props),
 			lineHeight: "base",
 		},
-		body: {
-			color: mode("black.800", "white.100")(props),
-			bg: mode("white.200", "black.700")(props),
-		},
+		body: {},
 		html: {
 			scrollBehavior: "smooth",
 		},
 		".body": {
 			overflowY: "scroll",
+			overflowX: "hidden",
+			bg: "purple.600",
+			color: "white",
 		},
 	}),
 };

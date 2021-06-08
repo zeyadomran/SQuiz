@@ -8,13 +8,13 @@ interface ChakraConfig {
 }
 
 const config: ChakraConfig = {
-	initialColorMode: "dark",
+	initialColorMode: "light",
 	useSystemColorMode: false,
 };
 
 const fonts = {
-	heading: "Poppins, sans-serif",
-	body: "Roboto, sans-serif",
+	heading: "Bangers, sans-serif",
+	body: "'Open Sans', sans-serif",
 };
 
 const theme = extendTheme({
