@@ -6,8 +6,10 @@ import {
 	FormLabel,
 	Heading,
 	Input,
+	Text,
 } from "@chakra-ui/react";
 import { Field, Form, Formik } from "formik";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
 import { MeDocument, MeQuery, useLoginMutation } from "../generated/graphql";
@@ -107,6 +109,17 @@ const LoginForm: React.FC = () => {
 						>
 							Submit
 						</Button>
+						<Link href="/forgotpassword">
+							<Text
+								color="purple.300"
+								mt="5px"
+								size="xs"
+								cursor="pointer"
+								_hover={{ color: "purple.500" }}
+							>
+								Forgot Password?
+							</Text>
+						</Link>
 					</Form>
 				)}
 			</Formik>
