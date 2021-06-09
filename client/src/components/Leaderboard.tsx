@@ -18,8 +18,8 @@ const Leaderboard: React.FC = () => {
 	});
 	return (
 		<Box
-			w={{ base: "sm", md: "md" }}
-			h={{ base: "2xs", md: "md" }}
+			w={["xs", "sm", "md"]}
+			h={["2xs", "xs", "md"]}
 			overflowY="scroll"
 			p={8}
 			rounded={"lg"}

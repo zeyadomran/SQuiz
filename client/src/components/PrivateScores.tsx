@@ -19,10 +19,10 @@ const PrivateScores: React.FC = () => {
 	});
 	return (
 		<Box
-			w={{ base: "sm", md: "md" }}
+			w={["xs", "sm", "md"]}
 			p={8}
 			rounded={"lg"}
-			h={{ base: "2xs", md: "md" }}
+			h={["2xs", "xs", "md"]}
 			overflowY="scroll"
 			bg={"purple.700"}
 		>

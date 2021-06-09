@@ -15,7 +15,12 @@ const Dashboard: React.FC = () => {
 			<Head>
 				<title>Dashboard</title>
 			</Head>
-			<Flex h={"100vh"} direction="column" justify="space-between">
+			<Flex
+				h={"100vh"}
+				overflowX={"hidden"}
+				direction="column"
+				justify="space-between"
+			>
 				<Header />
 				<Stack mx="auto" spacing={5} direction={{ base: "column", md: "row" }}>
 					<PrivateScores />
