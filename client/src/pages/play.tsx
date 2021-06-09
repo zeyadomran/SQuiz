@@ -19,7 +19,7 @@ const Play: React.FC = () => {
 	return (
 		<>
 			<Head>
-				<title>SQuiz</title>
+				<title>Play</title>
 			</Head>
 			{!data || !data.questions ? (
 				<Flex h={"100vh"} direction="column" justify="space-between">
