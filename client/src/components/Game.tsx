@@ -16,44 +16,49 @@ const Game: React.FC<any> = ({ questions }: { questions: Question[] }) => {
 	return (
 		<>
 			<Box h="100vh" w="100vw" overflowY="scroll" border="10px solid #0FD9D8">
+				{gameOver}
 				{gameOver === 2 && <GameWon score={6 * state.hints * state.score} />}
 				{gameOver === 1 && <GameLost score={state.score} />}
-				<Icon
-					mx="auto"
-					w={["200px", "220px", "240px", "250px"]}
-					h={["140px", "160px", "180px", "200px"]}
-					as={Squiz}
-				/>
-				<Stack spacing={[4, 6, 8, 10]} align="center">
-					<QuestionBody
-						dispatch={() => {
-							if (state.count === 9) {
-								setGameOver(2);
-							}
-							dispatch({ type: "nextQuestion" });
-							setQuestion(state.questions[state.count]);
-						}}
-						wrong={() => setGameOver(1)}
-						question={question}
-					/>
-					<Link href="/dashboard">
-						<Button
-							p={4}
-							bg={"purple.800"}
-							size={"lg"}
-							color="white"
-							_active={{ border: "none" }}
-							_focus={{ border: "none" }}
-							_hover={{ bg: "purple.900" }}
-						>
-							Quit Game
-						</Button>
-					</Link>
-					<Heading as="h3">Score: {state.score}</Heading>
-					<Heading as="h3">
-						Question {state.count + 1}/{questions.length}
-					</Heading>
-				</Stack>
+				{gameOver === 0 && (
+					<>
+						<Icon
+							mx="auto"
+							w={["200px", "220px", "240px", "250px"]}
+							h={["140px", "160px", "180px", "200px"]}
+							as={Squiz}
+						/>
+						<Stack spacing={[4, 6, 8, 10]} align="center">
+							<QuestionBody
+								dispatch={() => {
+									if (state.count === 9) {
+										setGameOver(2);
+									}
+									dispatch({ type: "nextQuestion" });
+									setQuestion(state.questions[state.count]);
+								}}
+								wrong={() => setGameOver(1)}
+								question={question}
+							/>
+							<Link href="/dashboard">
+								<Button
+									p={4}
+									bg={"purple.800"}
+									size={"lg"}
+									color="white"
+									_active={{ border: "none" }}
+									_focus={{ border: "none" }}
+									_hover={{ bg: "purple.900" }}
+								>
+									Quit Game
+								</Button>
+							</Link>
+							<Heading as="h3">Score: {state.score}</Heading>
+							<Heading as="h3">
+								Question {state.count + 1}/{questions.length}
+							</Heading>
+						</Stack>
+					</>
+				)}
 			</Box>
 		</>
 	);
