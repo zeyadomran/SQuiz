@@ -1,0 +1,8 @@
+mutation AddScore($score: Int!) {
+	addScore(score: $score) {
+		id
+		username
+		score
+		createdAt
+	}
+}

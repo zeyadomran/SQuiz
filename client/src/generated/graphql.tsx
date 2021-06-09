@@ -176,6 +176,19 @@ export type UserResponse = {
   user?: Maybe<User>;
 };
 
+export type AddScoreMutationVariables = Exact<{
+  score: Scalars['Int'];
+}>;
+
+
+export type AddScoreMutation = (
+  { __typename?: 'Mutation' }
+  & { addScore?: Maybe<(
+    { __typename?: 'Score' }
+    & Pick<Score, 'id' | 'username' | 'score' | 'createdAt'>
+  )> }
+);
+
 export type ForgotPasswordMutationVariables = Exact<{
   email: Scalars['String'];
 }>;
@@ -301,7 +314,58 @@ export type MeQuery = (
   )> }
 );
 
+export type QuestionsQueryVariables = Exact<{ [key: string]: never; }>;
 
+
+export type QuestionsQuery = (
+  { __typename?: 'Query' }
+  & { questions: Array<(
+    { __typename?: 'Question' }
+    & Pick<Question, 'id' | 'title'>
+    & { answers: Array<(
+      { __typename?: 'Answer' }
+      & Pick<Answer, 'title' | 'isCorrect'>
+    )> }
+  )> }
+);
+
+
+export const AddScoreDocument = gql`
+    mutation AddScore($score: Int!) {
+  addScore(score: $score) {
+    id
+    username
+    score
+    createdAt
+  }
+}
+    `;
+export type AddScoreMutationFn = Apollo.MutationFunction<AddScoreMutation, AddScoreMutationVariables>;
+
+/**
+ * __useAddScoreMutation__
+ *
+ * To run a mutation, you first call `useAddScoreMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddScoreMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addScoreMutation, { data, loading, error }] = useAddScoreMutation({
+ *   variables: {
+ *      score: // value for 'score'
+ *   },
+ * });
+ */
+export function useAddScoreMutation(baseOptions?: Apollo.MutationHookOptions<AddScoreMutation, AddScoreMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<AddScoreMutation, AddScoreMutationVariables>(AddScoreDocument, options);
+      }
+export type AddScoreMutationHookResult = ReturnType<typeof useAddScoreMutation>;
+export type AddScoreMutationResult = Apollo.MutationResult<AddScoreMutation>;
+export type AddScoreMutationOptions = Apollo.BaseMutationOptions<AddScoreMutation, AddScoreMutationVariables>;
 export const ForgotPasswordDocument = gql`
     mutation ForgotPassword($email: String!) {
   forgotPassword(email: $email)
@@ -613,3 +677,42 @@ export function useMeLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<MeQuery
 export type MeQueryHookResult = ReturnType<typeof useMeQuery>;
 export type MeLazyQueryHookResult = ReturnType<typeof useMeLazyQuery>;
 export type MeQueryResult = Apollo.QueryResult<MeQuery, MeQueryVariables>;
+export const QuestionsDocument = gql`
+    query Questions {
+  questions {
+    id
+    title
+    answers {
+      title
+      isCorrect
+    }
+  }
+}
+    `;
+
+/**
+ * __useQuestionsQuery__
+ *
+ * To run a query within a React component, call `useQuestionsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useQuestionsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useQuestionsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useQuestionsQuery(baseOptions?: Apollo.QueryHookOptions<QuestionsQuery, QuestionsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<QuestionsQuery, QuestionsQueryVariables>(QuestionsDocument, options);
+      }
+export function useQuestionsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<QuestionsQuery, QuestionsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<QuestionsQuery, QuestionsQueryVariables>(QuestionsDocument, options);
+        }
+export type QuestionsQueryHookResult = ReturnType<typeof useQuestionsQuery>;
+export type QuestionsLazyQueryHookResult = ReturnType<typeof useQuestionsLazyQuery>;
+export type QuestionsQueryResult = Apollo.QueryResult<QuestionsQuery, QuestionsQueryVariables>;

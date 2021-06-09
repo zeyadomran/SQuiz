@@ -1,0 +1,10 @@
+query Questions {
+	questions {
+		id
+		title
+		answers {
+			title
+			isCorrect
+		}
+	}
+}
