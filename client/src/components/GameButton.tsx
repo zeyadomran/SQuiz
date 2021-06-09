@@ -1,4 +1,5 @@
 import { Button } from "@chakra-ui/button";
+import { Box, Text } from "@chakra-ui/layout";
 import React from "react";
 
 interface GameButtonProps {
@@ -22,17 +23,17 @@ const GameButton: React.FC<GameButtonProps> = ({
 	}, [id]);
 
 	return (
-		<Button
+		<Box
+			as={Button}
 			isDisabled={isDisabled}
 			textAlign="center"
-			size={"lg"}
 			background={color}
 			color="purple.900"
-			fontSize="20px"
-			textTransform="uppercase"
+			fontSize="15px"
 			fontWeight="black"
-			px={5}
-			py={2}
+			p={16}
+			whiteSpace="normal"
+			wordWrap="break-word"
 			outline="none"
 			borderRadius={"5px"}
 			_focus={{ border: "none" }}
@@ -69,8 +70,8 @@ const GameButton: React.FC<GameButtonProps> = ({
 				onPress();
 			}}
 		>
-			{children}
-		</Button>
+			<Text>{children}</Text>
+		</Box>
 	);
 };
 

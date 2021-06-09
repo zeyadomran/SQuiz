@@ -6,6 +6,7 @@ import Game from "../components/Game";
 import { Header } from "../components/Header";
 import { useQuestionsQuery } from "../generated/graphql";
 import { isServer } from "../utils/isServer";
+import { useIsAuth } from "../utils/useIsAuth";
 import withApollo from "../utils/withApollo";
 
 const Play: React.FC = () => {
@@ -13,6 +14,7 @@ const Play: React.FC = () => {
 		skip: isServer(),
 		notifyOnNetworkStatusChange: true,
 	});
+	useIsAuth();
 
 	return (
 		<>
