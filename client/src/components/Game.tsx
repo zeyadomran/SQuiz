@@ -13,12 +13,6 @@ const Game: React.FC<any> = ({ questions }: { questions: Question[] }) => {
 	const [gameOver, setGameOver] = React.useState(0);
 	const [question, setQuestion] = React.useState(state.questions[state.count]);
 
-	React.useEffect(() => {
-		if (state.count === 10) {
-			setGameOver(2);
-		}
-	}, [question]);
-
 	return (
 		<>
 			<Box h="100vh" w="100vw" overflowY="scroll" border="10px solid #0FD9D8">
@@ -33,6 +27,9 @@ const Game: React.FC<any> = ({ questions }: { questions: Question[] }) => {
 				<Stack spacing={[4, 6, 8, 10]} align="center">
 					<QuestionBody
 						dispatch={() => {
+							if (state.count === 9) {
+								setGameOver(2);
+							}
 							dispatch({ type: "nextQuestion" });
 							setQuestion(state.questions[state.count]);
 						}}
