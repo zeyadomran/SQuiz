@@ -139,7 +139,7 @@ export const forgotPassword = async (email: string) => {
 		await sendEmail(
 			user.email,
 			"Reset Password Link (valid for 24 hours)",
-			`Link: http://localhost:3000/forgotpassword/${resetToken}`
+			`Link: https://squiz.zeyadomran.com/forgotpassword/${resetToken}`
 		);
 
 		return true;
