@@ -16,7 +16,6 @@ const Game: React.FC<any> = ({ questions }: { questions: Question[] }) => {
 	return (
 		<>
 			<Box h="100vh" w="100vw" overflowY="scroll" border="10px solid #0FD9D8">
-				{gameOver}
 				{gameOver === 2 && <GameWon score={6 * state.hints * state.score} />}
 				{gameOver === 1 && <GameLost score={state.score} />}
 				{gameOver === 0 && (
