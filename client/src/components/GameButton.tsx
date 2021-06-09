@@ -25,15 +25,17 @@ const GameButton: React.FC<GameButtonProps> = ({
 	return (
 		<Box
 			as={Button}
+			h="auto"
 			isDisabled={isDisabled}
 			textAlign="center"
 			background={color}
 			color="purple.900"
 			fontSize="15px"
 			fontWeight="black"
-			p={16}
+			p={4}
 			whiteSpace="normal"
 			wordWrap="break-word"
+			overflowWrap="break-word"
 			outline="none"
 			borderRadius={"5px"}
 			_focus={{ border: "none" }}
