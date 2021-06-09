@@ -7,6 +7,7 @@ import {
 	PopoverBody,
 	Stack,
 } from "@chakra-ui/react";
+import { useRouter } from "next/router";
 import React from "react";
 import {
 	useLogoutMutation,
@@ -27,6 +28,7 @@ const Profile: React.FC<ProfileProps> = ({ username, isPrivate }) => {
 			},
 		});
 	const apolloClient = useApolloClient();
+	const router = useRouter();
 	let privateMsg = null;
 
 	if (!isPrivate) privateMsg = "Switch to Private";
@@ -57,6 +59,7 @@ const Profile: React.FC<ProfileProps> = ({ username, isPrivate }) => {
 						<Button
 							onClick={async () => {
 								await logout();
+								router.push("/");
 								await apolloClient.resetStore();
 							}}
 							isLoading={logoutFetching}
