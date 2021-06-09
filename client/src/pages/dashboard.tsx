@@ -17,12 +17,18 @@ const Dashboard: React.FC = () => {
 			</Head>
 			<Flex
 				h={"100vh"}
+				w="100vw"
 				overflowX={"hidden"}
 				direction="column"
 				justify="space-between"
 			>
 				<Header />
-				<Stack mx="auto" spacing={5} direction={{ base: "column", md: "row" }}>
+				<Stack
+					mx="auto"
+					spacing={5}
+					mb="10"
+					direction={{ base: "column", md: "row" }}
+				>
 					<PrivateScores />
 					<Leaderboard />
 				</Stack>

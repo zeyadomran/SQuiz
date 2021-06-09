@@ -15,9 +15,13 @@ export const styles: Styles = {
 		},
 		body: {
 			bg: "purple.600",
+			overflowY: "scroll",
+			overflowX: "hidden",
 		},
 		html: {
 			scrollBehavior: "smooth",
+			overflowY: "scroll",
+			overflowX: "hidden",
 		},
 		".body": {
 			overflowY: "scroll",
