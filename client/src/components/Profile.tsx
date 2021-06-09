@@ -59,8 +59,8 @@ const Profile: React.FC<ProfileProps> = ({ username, isPrivate }) => {
 						<Button
 							onClick={async () => {
 								await logout();
-								router.push("/");
 								await apolloClient.resetStore();
+								router.push("/");
 							}}
 							isLoading={logoutFetching}
 							bg="purple.600"
