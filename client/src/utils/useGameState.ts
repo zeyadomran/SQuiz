@@ -38,8 +38,6 @@ const reducer = (state: State, action: Actions) => {
 			localStorage.setItem("sound", "true");
 			return { ...state, sound: "true" };
 		case "nextQuestion":
-			if (state.count + 1 >= state.questions.length)
-				return { ...state, count: 0, score: 0 };
 			return {
 				...state,
 				count: (state.count += 1),
