@@ -11,14 +11,16 @@ import Timer from "./Timer";
 
 const Game: React.FC<any> = ({ questions }: { questions: Question[] }) => {
 	const [state, dispatch] = useGameState(questions);
-	const [timeLeft, setTimeLeft] = React.useState(300);
+	const [timeLeft, setTimeLeft] = React.useState(150);
 	const [gameOver, setGameOver] = React.useState(0);
 	const [question, setQuestion] = React.useState(state.questions[state.count]);
 
 	return (
 		<>
 			<Box h="100vh" w="100vw" overflowY="scroll" border="10px solid #0FD9D8">
-				{gameOver === 2 && <GameWon score={6 * state.hints * state.score} />}
+				{gameOver === 2 && (
+					<GameWon score={6 * (timeLeft * 0.5) * state.score} />
+				)}
 				{gameOver === 1 && <GameLost score={state.score} />}
 				{gameOver === 0 && (
 					<>

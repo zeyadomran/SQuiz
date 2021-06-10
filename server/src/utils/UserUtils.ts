@@ -22,7 +22,7 @@ export const leaderBoard = () => {
 			score: { $max: "$scores.score" },
 			createdAt: { $first: "$scores.createdAt" },
 		})
-		.sort({ score: -1 })
+		.sort({ score: -1, createdAt: 1 })
 		.limit(25)
 		.project({
 			id: "$_id",
