@@ -7,9 +7,11 @@ import QuestionBody from "./Question";
 import GameWon from "./GameWon";
 import GameLost from "./GameLost";
 import Link from "next/link";
+import Timer from "./Timer";
 
 const Game: React.FC<any> = ({ questions }: { questions: Question[] }) => {
 	const [state, dispatch] = useGameState(questions);
+	const [timeLeft, setTimeLeft] = React.useState(300);
 	const [gameOver, setGameOver] = React.useState(0);
 	const [question, setQuestion] = React.useState(state.questions[state.count]);
 
@@ -23,10 +25,15 @@ const Game: React.FC<any> = ({ questions }: { questions: Question[] }) => {
 						<Icon
 							mx="auto"
 							w={["200px", "220px", "240px", "250px"]}
-							h={["140px", "160px", "180px", "200px"]}
+							h={["100px", "120px", "140px", "160px"]}
 							as={Squiz}
 						/>
-						<Stack spacing={[4, 6, 8, 10]} align="center">
+						<Stack spacing={[2, 4, 6, 8]} align="center">
+							<Timer
+								timeLeft={timeLeft}
+								setTimeLeft={setTimeLeft}
+								setGameOver={setGameOver}
+							/>
 							<QuestionBody
 								dispatch={() => {
 									if (state.count === 9) {
@@ -51,8 +58,8 @@ const Game: React.FC<any> = ({ questions }: { questions: Question[] }) => {
 									Quit Game
 								</Button>
 							</Link>
-							<Heading as="h3">Score: {state.score}</Heading>
-							<Heading as="h3">
+							<Heading as="h4">Score: {state.score}</Heading>
+							<Heading as="h4">
 								Question {state.count + 1}/{questions.length}
 							</Heading>
 						</Stack>
