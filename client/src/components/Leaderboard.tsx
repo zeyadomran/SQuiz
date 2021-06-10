@@ -21,6 +21,7 @@ const Leaderboard: React.FC = () => {
 			w={["xs", "sm", "md"]}
 			h={["2xs", "xs", "md"]}
 			overflowY="scroll"
+			overflowX="hidden"
 			p={8}
 			rounded={"lg"}
 			bg={"purple.700"}
@@ -31,13 +32,13 @@ const Leaderboard: React.FC = () => {
 			<Table size="sm" variant="simple">
 				<Thead>
 					<Tr>
-						<Th fontFamily="Open Sans" fontSize="14px" color="#0FD9D8">
-							rank
+						<Th fontFamily="Open Sans" fontSize="12px" color="#0FD9D8">
+							#
 						</Th>
-						<Th fontFamily="Open Sans" fontSize="14px" color="#0FD9D8">
+						<Th fontFamily="Open Sans" fontSize="12px" color="#0FD9D8">
 							username
 						</Th>
-						<Th fontFamily="Open Sans" fontSize="14px" color="#0FD9D8">
+						<Th fontFamily="Open Sans" fontSize="12px" color="#0FD9D8">
 							Score
 						</Th>
 					</Tr>
@@ -45,9 +46,15 @@ const Leaderboard: React.FC = () => {
 				<Tbody>
 					{data?.leaderBoard?.map((score, i) => (
 						<Tr key={score.id}>
-							<Td>#{i + 1}</Td>
-							<Td>{score.username}</Td>
-							<Td>{score.score}</Td>
+							<Td fontFamily="Open Sans" fontSize="12px">
+								{i + 1}
+							</Td>
+							<Td fontFamily="Open Sans" fontSize="12px">
+								{score.username}
+							</Td>
+							<Td fontFamily="Open Sans" fontSize="12px">
+								{score.score}
+							</Td>
 						</Tr>
 					))}
 				</Tbody>
