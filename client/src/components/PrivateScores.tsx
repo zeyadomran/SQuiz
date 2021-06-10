@@ -32,10 +32,10 @@ const PrivateScores: React.FC = () => {
 			<Table size="sm" variant="simple">
 				<Thead>
 					<Tr>
-						<Th fontFamily="Open Sans" fontSize="14px" color="#0FD9D8">
+						<Th fontFamily="Open Sans" fontSize="12px" color="#0FD9D8">
 							Score
 						</Th>
-						<Th fontFamily="Open Sans" fontSize="14px" color="#0FD9D8">
+						<Th fontFamily="Open Sans" fontSize="12px" color="#0FD9D8">
 							Date
 						</Th>
 					</Tr>
@@ -43,8 +43,12 @@ const PrivateScores: React.FC = () => {
 				<Tbody>
 					{data?.me?.scores?.map((_, i, arr) => (
 						<Tr key={i}>
-							<Td>{arr[arr.length - i - 1].score}</Td>
-							<Td>{formatDate(arr[arr.length - i - 1].createdAt)}</Td>
+							<Td fontFamily="Open Sans" fontSize="12px">
+								{arr[arr.length - i - 1].score}
+							</Td>
+							<Td fontFamily="Open Sans" fontSize="12px">
+								{formatDate(arr[arr.length - i - 1].createdAt)}
+							</Td>
 						</Tr>
 					))}
 				</Tbody>
