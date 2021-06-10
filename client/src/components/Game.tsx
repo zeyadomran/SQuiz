@@ -28,12 +28,12 @@ const Game: React.FC<any> = ({ questions }: { questions: Question[] }) => {
 							h={["100px", "120px", "140px", "160px"]}
 							as={Squiz}
 						/>
+						<Timer
+							timeLeft={timeLeft}
+							setTimeLeft={setTimeLeft}
+							setGameOver={setGameOver}
+						/>
 						<Stack spacing={[2, 4, 6, 8]} align="center">
-							<Timer
-								timeLeft={timeLeft}
-								setTimeLeft={setTimeLeft}
-								setGameOver={setGameOver}
-							/>
 							<QuestionBody
 								dispatch={() => {
 									if (state.count === 9) {
