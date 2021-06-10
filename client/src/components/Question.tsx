@@ -70,6 +70,7 @@ const QuestionBody: React.FC<GameButtonProps> = ({
 			</Heading>
 			<Box px={[20, 40, 60]}>
 				<SimpleGrid
+					p={4}
 					columns={{ base: 1, md: 2 }}
 					columnGap={"80px"}
 					rowGap={"20px"}

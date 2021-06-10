@@ -41,10 +41,10 @@ const PrivateScores: React.FC = () => {
 					</Tr>
 				</Thead>
 				<Tbody>
-					{data?.me?.scores.map((score, i) => (
+					{data?.me?.scores?.map((_, i, arr) => (
 						<Tr key={i}>
-							<Td>{score.score}</Td>
-							<Td>{formatDate(score.createdAt)}</Td>
+							<Td>{arr[arr.length - i - 1].score}</Td>
+							<Td>{formatDate(arr[arr.length - i - 1].createdAt)}</Td>
 						</Tr>
 					))}
 				</Tbody>

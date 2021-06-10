@@ -1,6 +1,7 @@
 import { Button } from "@chakra-ui/button";
 import { Box, Text } from "@chakra-ui/layout";
 import React from "react";
+import useSound from "use-sound";
 
 interface GameButtonProps {
 	isCorrect: boolean;
@@ -17,6 +18,8 @@ const GameButton: React.FC<GameButtonProps> = ({
 	isDisabled,
 }) => {
 	const [color, setColor] = React.useState("#0FD9D8");
+	const [playCorrect] = useSound("sounds/correct.mp3", { volume: 0.25 });
+	const [playWrong] = useSound("sounds/wrong.mp3", { volume: 0.25 });
 
 	React.useEffect(() => {
 		setColor("#0FD9D8");
@@ -66,8 +69,10 @@ const GameButton: React.FC<GameButtonProps> = ({
 			onClick={() => {
 				if (isCorrect) {
 					setColor("green.300");
+					playCorrect();
 				} else {
 					setColor("red.300");
+					playWrong();
 				}
 				onPress();
 			}}
