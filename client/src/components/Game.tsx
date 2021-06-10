@@ -61,9 +61,7 @@ const Game: React.FC<any> = ({ questions }: { questions: Question[] }) => {
 								</Button>
 							</Link>
 							<Heading as="h4">Score: {state.score}</Heading>
-							<Heading as="h4">
-								Question {state.count + 1}/{questions.length}
-							</Heading>
+							<Heading as="h4">Question {state.count + 1}/10</Heading>
 						</Stack>
 					</>
 				)}
