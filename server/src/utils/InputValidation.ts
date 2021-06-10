@@ -24,8 +24,6 @@ export const validateEmail = (email: string) => {
 };
 export const validateUsername = (username: string) => {
 	if (username.length < 3 && username.length > 18) {
-		console.log(username, username.length);
-
 		return {
 			field: "username",
 			message: "Username needs to between 3 & 18 characters long.",
