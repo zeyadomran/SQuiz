@@ -1,4 +1,4 @@
-import { Box, Flex, Spinner } from "@chakra-ui/react";
+import { Center, Flex, Spinner } from "@chakra-ui/react";
 import Head from "next/head";
 import React from "react";
 import { Footer } from "../components/Footer";
@@ -35,9 +35,9 @@ const Play: React.FC = () => {
 					<Footer />
 				</Flex>
 			) : (
-				<Box h={"100vh"} textAlign="center">
+				<Center h={"100vh"} w="100vw" textAlign="center">
 					<Game questions={data.questions} />
-				</Box>
+				</Center>
 			)}
 		</>
 	);

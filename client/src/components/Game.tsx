@@ -1,4 +1,4 @@
-import { Box, Button, Heading, Icon, Stack } from "@chakra-ui/react";
+import { Box, Button, Center, Heading, Icon, Stack } from "@chakra-ui/react";
 import React from "react";
 import { Question } from "../generated/graphql";
 import { useGameState } from "../utils/useGameState";
@@ -16,12 +16,12 @@ const Game: React.FC<any> = ({ questions }: { questions: Question[] }) => {
 	const [question, setQuestion] = React.useState(state.questions[state.count]);
 
 	return (
-		<>
-			<Box h="100vh" w="100vw" overflowY="scroll" border="10px solid #0FD9D8">
+		<Center>
+			<Box p={4} h="90%" w="90%" border="10px solid #0FD9D8">
 				{gameOver === 2 && (
 					<GameWon score={6 * (timeLeft * 0.5) * state.score} />
 				)}
-				{gameOver === 1 && <GameLost score={state.score} />}
+				{gameOver === 1 && <GameLost score={timeLeft * 0.05 * state.score} />}
 				{gameOver === 0 && (
 					<>
 						<Icon
@@ -66,7 +66,7 @@ const Game: React.FC<any> = ({ questions }: { questions: Question[] }) => {
 					</>
 				)}
 			</Box>
-		</>
+		</Center>
 	);
 };
 
