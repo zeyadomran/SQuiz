@@ -19,9 +19,11 @@ const Game: React.FC<any> = ({ questions }: { questions: Question[] }) => {
 		<Center>
 			<Box p={4} h="90%" w="90%" border="10px solid #0FD9D8">
 				{gameOver === 2 && (
-					<GameWon score={6 * (timeLeft * 0.5) * state.score} />
+					<GameWon score={Math.floor(6 * (timeLeft * 0.5) * state.score)} />
 				)}
-				{gameOver === 1 && <GameLost score={timeLeft * 0.05 * state.score} />}
+				{gameOver === 1 && (
+					<GameLost score={Math.floor(timeLeft * 0.05 * state.score)} />
+				)}
 				{gameOver === 0 && (
 					<>
 						<Icon
