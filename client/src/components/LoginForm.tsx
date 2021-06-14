@@ -70,7 +70,7 @@ const LoginForm: React.FC = () => {
 									<Input
 										{...field}
 										id="usernameOrEmail"
-										placeholder="username or email"
+										placeholder="Username or Email"
 									/>
 									<FormErrorMessage fontWeight="bold">
 										{form.errors.usernameOrEmail}
@@ -86,7 +86,7 @@ const LoginForm: React.FC = () => {
 										{...field}
 										type="password"
 										id="password"
-										placeholder="password"
+										placeholder="Password"
 									/>
 									<FormErrorMessage fontWeight="bold">
 										{form.errors.password}

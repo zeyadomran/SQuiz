@@ -6,6 +6,8 @@ import {
 	FormLabel,
 	Heading,
 	Input,
+	Stack,
+	Text,
 } from "@chakra-ui/react";
 import { Field, Form, Formik } from "formik";
 import { useRouter } from "next/router";
@@ -94,10 +96,15 @@ const SignupForm: React.FC = () => {
 										{...field}
 										type="password"
 										id="password"
-										placeholder="password"
+										placeholder="Password"
 									/>
 									<FormErrorMessage fontWeight="bold">
-										{form.errors.password}
+										<Stack spacing={1}>
+											{form.errors.password &&
+												form.errors.password.map((err: string, i: number) => (
+													<Text key={i}>{err}</Text>
+												))}
+										</Stack>
 									</FormErrorMessage>
 								</FormControl>
 							)}

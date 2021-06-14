@@ -5,7 +5,9 @@ import {
 	FormErrorMessage,
 	FormLabel,
 	Heading,
+	Text,
 	Input,
+	Stack,
 } from "@chakra-ui/react";
 import { Field, Form, Formik } from "formik";
 import router from "next/router";
@@ -74,10 +76,15 @@ const ResetPasswordForm: React.FC<FormProps> = ({ token }) => {
 										{...field}
 										type="password"
 										id="password"
-										placeholder="password"
+										placeholder="Password"
 									/>
 									<FormErrorMessage fontWeight="bold">
-										{form.errors.password}
+										<Stack spacing={1}>
+											{form.errors.password &&
+												form.errors.password.map((err: string, i: number) => (
+													<Text key={i}>{err}</Text>
+												))}
+										</Stack>
 									</FormErrorMessage>
 								</FormControl>
 							)}
