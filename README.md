@@ -9,7 +9,7 @@ So what are you waiting for, go try and get the highest score!
 
 ## Demo
 
-You can view the production version [right here](https://squiz.zeyadomran.com)
+You can view the production version [here](https://squiz.zeyadomran.com)
 
   
 ## Tech Stack
