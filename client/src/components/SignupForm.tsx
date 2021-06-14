@@ -96,9 +96,11 @@ const SignupForm: React.FC = () => {
 										id="password"
 										placeholder="password"
 									/>
-									<FormErrorMessage fontWeight="bold">
-										{form.errors.password}
-									</FormErrorMessage>
+									{form.errors.password.map((err: any, i: any) => (
+										<FormErrorMessage key={i} fontWeight="bold">
+											{err}
+										</FormErrorMessage>
+									))}
 								</FormControl>
 							)}
 						</Field>

@@ -33,6 +33,7 @@ const Game: React.FC<any> = ({ questions }: { questions: Question[] }) => {
 							as={Squiz}
 						/>
 						<Timer
+							gameOver={gameOver}
 							timeLeft={timeLeft}
 							setTimeLeft={setTimeLeft}
 							setGameOver={setGameOver}
