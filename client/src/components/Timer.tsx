@@ -2,14 +2,12 @@ import { Heading } from "@chakra-ui/react";
 import React from "react";
 import useSound from "use-sound";
 interface TimerProps {
-	gameOver: number;
 	timeLeft: number;
 	setTimeLeft: (newTime: number) => void;
 	setGameOver: (state: number) => void;
 }
 
 const Timer: React.FC<TimerProps> = ({
-	gameOver,
 	timeLeft,
 	setTimeLeft,
 	setGameOver,
@@ -25,9 +23,7 @@ const Timer: React.FC<TimerProps> = ({
 	}, []);
 
 	React.useEffect(() => {
-		if (gameOver === 0) {
-			setTimeout(() => setTimeLeft(timeLeft - 1), 1000);
-		}
+		setTimeout(() => setTimeLeft(timeLeft - 1), 1000);
 		if (timeLeft === 10) {
 			console.log(timeLeft);
 			play();

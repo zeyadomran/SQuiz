@@ -74,13 +74,11 @@ const ResetPasswordForm: React.FC<FormProps> = ({ token }) => {
 										{...field}
 										type="password"
 										id="password"
-										placeholder="Password"
+										placeholder="password"
 									/>
-									{form.errors.password.map((err: any, i: any) => (
-										<FormErrorMessage key={i} fontWeight="bold">
-											{err}
-										</FormErrorMessage>
-									))}
+									<FormErrorMessage fontWeight="bold">
+										{form.errors.password}
+									</FormErrorMessage>
 								</FormControl>
 							)}
 						</Field>
