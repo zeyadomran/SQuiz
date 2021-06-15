@@ -1,4 +1,4 @@
-import { Center, Flex, Icon, Spinner, Stack } from "@chakra-ui/react";
+import { Flex, Icon, Spinner, Stack } from "@chakra-ui/react";
 import Head from "next/head";
 import React from "react";
 import { Footer } from "../components/Footer";
