@@ -1,7 +1,8 @@
-import { Center, Flex, Spinner } from "@chakra-ui/react";
+import { Center, Flex, Icon, Spinner, Stack } from "@chakra-ui/react";
 import Head from "next/head";
 import React from "react";
 import { Footer } from "../components/Footer";
+import Squiz from "../resources/squiz-logo.svg";
 import Game from "../components/Game";
 import { Header } from "../components/Header";
 import { useQuestionsQuery } from "../generated/graphql";
@@ -35,9 +36,15 @@ const Play: React.FC = () => {
 					<Footer />
 				</Flex>
 			) : (
-				<Center h={"100vh"} w="100vw" textAlign="center">
+				<Stack p={4} h={"100vh"} w="100vw" textAlign="center">
+					<Icon
+						mx="auto"
+						w={["200px", "220px", "240px", "250px"]}
+						h={["100px", "120px", "140px", "160px"]}
+						as={Squiz}
+					/>
 					<Game questions={data.questions} />
-				</Center>
+				</Stack>
 			)}
 		</>
 	);

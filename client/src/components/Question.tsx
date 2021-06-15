@@ -63,17 +63,18 @@ const QuestionBody: React.FC<GameButtonProps> = ({
 			)}
 			<Heading
 				textAlign="center"
-				as="h1"
-				fontSize={["3xl", "4xl", "5xl", "6xl"]}
+				as="h3"
+				fontSize={["2xl", "3xl", "4xl", "5xl"]}
 			>
 				{question.title}
 			</Heading>
-			<Box px={[20, 40, 60]}>
+			<Box px={[10, 20, 30]}>
 				<SimpleGrid
-					p={4}
+					p={1}
 					columns={{ base: 1, md: 2 }}
 					columnGap={"80px"}
 					rowGap={"20px"}
+					mb={"10px"}
 				>
 					{question.answers.map((a, i) => (
 						<GameButton
