@@ -29,7 +29,17 @@ To deploy the server, the server is deploying in a DigitalOcean droplet.
   cd server
   sh deploy.sh
 ```
-  
+
+## Run Locally
+
+- Server
+    - First, create a `.env` file in the server directory and populate it with all the variables required, you can see wwhat is required from the `.env.example` file.
+    - Second, `cd server` and `yarn install` then `yarn build` and finally `yarn start` to start the server.
+
+- Client
+    - First, create a `.env.local` file in the client directory and add the following to it: `NEXT_PUBLIC_API_URL="http://localhost:4000/graphql"`.
+    - Second, `cd client` and `yarn install` then `yarn dev` to start the front end.
+
 ## Authors
 
 - [@zeyadomran](https://www.github.com/zeyadomran)
