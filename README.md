@@ -1,16 +1,9 @@
-
-![Logo](https://squiz.zeyadomran.com/images/favicon.ico)
-
-    
 # Welcome to SQuiz's repository
 
 SQuiz is an interactive quiz style game, were players compete to get the highest score. SQuiz has a focus on Information Security & Privacy, we followed the best practices for security and User privacy, we also provide players the option to hide their profile from the public leaderboard.
 So what are you waiting for, go try and get the highest score!
 
-## Demo
-
-You can view the production version [here](https://squiz.zeyadomran.com)
-
+## No Longer Deployed!
   
 ## Tech Stack
 
